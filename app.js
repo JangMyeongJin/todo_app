@@ -4,6 +4,9 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const indexRouter = require("./routes/index");
 
+require("dotenv").config();
+const MONGOODB_URI = process.env.MONGOODB_URI;
+
 const app = express();
 app.use(bodyParser.json());
 
@@ -12,7 +15,7 @@ app.use(cors());
 
 app.use("/api",indexRouter);
 
-const mongoURI = "mongodb://localhost:27017/todo-demo";
+const mongoURI = MONGOODB_URI;
 
 mongoose.connect(mongoURI).then(() => {
     console.log("mongoose connected!");
