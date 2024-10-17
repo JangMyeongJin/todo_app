@@ -16,16 +16,26 @@ function App() {
 
   // 서버에 요청하는건 async
   const getTasks = async () => {
-    const response = await api.get("/tasks");
+    try {
+      const response = await api.get("/tasks");
 
-    setTodoList(response.data.data);
-  }
+      if(response.data.status === "ok"){
+        setTodoList(response.data.data);
+      }else {
+        throw new Error("can not be get");
+      }
+    }catch(err) {
+      console.log("Error : ",err);
+    }
+    
+    
+  };
 
   const enterPress = (key) => {
     if(key === "Enter"){
       addTask();
     }
-  }
+  };
 
   const addTask = async () => {
     try {
@@ -33,13 +43,41 @@ function App() {
         task: todoValue, status: false
       });
 
-      if(response.status === 200){
-
-        // eslint-disable-next-line no-restricted-globals
-        location.reload(true);
+      if(response.data.status === "ok"){
+        setTodoValue("");
+        getTasks();
 
       }else {
         throw new Error("task can not be added");
+      }
+    }catch(err) {
+      console.log("Error : ",err);
+    }
+  };
+
+  const deleteTasks = async (id) => {
+    try {
+      const response = await api.delete("/tasks/"+id);
+
+      if(response.data.status === "ok"){
+        getTasks();
+      }else {
+        throw new Error("task can not be deleted");
+      }
+    }catch(err) {
+      console.log("Error : ",err);
+    }
+    
+  };
+
+  const updateTasks = async (id) => {
+    try {
+      const response = await api.put("/tasks/"+id);
+
+      if(response.data.status === "ok"){
+        getTasks();
+      }else {
+        throw new Error("task can not be deleted");
       }
     }catch(err) {
       console.log("Error : ",err);
@@ -69,7 +107,7 @@ function App() {
         </Col>
       </Row>
 
-      <TodoBoard todoList={todoList}/>
+      <TodoBoard todoList={todoList} deleteTasks={deleteTasks} updateTasks={updateTasks} />
     </Container>
   );
 }
