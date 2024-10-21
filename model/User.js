@@ -21,7 +21,7 @@ const userSchema = schema({
     timestamps: true
 });
 
-// user Schema 중 원하는 데이터만 return
+// userSchema 중 원하는 데이터만 return
 userSchema.methods.toJSON = function() {
     const obj = this._doc;
     delete obj.password;
@@ -29,6 +29,7 @@ userSchema.methods.toJSON = function() {
     return obj;
 };
 
+// userSchema에 jwt 생성하는 함수 추가
 userSchema.methods.generateToken = function() {
     const token = jwt.sign({ _id: this._id }, JWT_SECRET_KEY);
     return token;

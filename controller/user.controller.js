@@ -61,9 +61,9 @@ userController.loginUser = async (req,res) => {
 
         throw new Error("아이디 또는 비밀번호가 일치하지 않습니다.");
     }catch(err){
-        res.status(200).json({
+        res.status(400).json({
             status: "fail",
-            err
+            message: err.message
         });
     }
 }
