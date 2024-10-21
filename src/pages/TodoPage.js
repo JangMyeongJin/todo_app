@@ -46,8 +46,9 @@ const TodoPage = () => {
   const toggleComplete = async (id) => {
     try {
       const task = todoList.find((item) => item._id === id);
+      console.log("task.status : ", task.status);
       const response = await api.put(`/tasks/${id}`, {
-        status: !task.status,
+        status: task.status,
       });
       if (response.status === 200) {
         getTasks();
