@@ -33,7 +33,7 @@ const RegisterPage = () => {
         throw new Error("Password does not match.");
       }
 
-      const response = await api.post("/user", {name, password, email})
+      const response = await api.post("/user", {name, password, email});
       if(response.status === 200){
         navigate("/login");
       }else {
