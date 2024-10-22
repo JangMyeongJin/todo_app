@@ -18,6 +18,9 @@ const LoginPage = () => {
     event.preventDefault();
 
     try{
+      if(email === "" || password === "") {
+        throw new Error("Please enter email or password");
+      }
       const response = await api.post("/user/login", {email, password});
       if(response.status === 200){
         setUser(response.data.user);
