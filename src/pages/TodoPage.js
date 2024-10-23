@@ -9,9 +9,8 @@ import { useNavigate } from "react-router-dom";
 const TodoPage = () => {
   const [todoList, setTodoList] = useState([]);
   const [todoValue, setTodoValue] = useState("");
-  const navigate = useNavigate();
 
-  const sessionToken = window.sessionStorage.getItem("token");
+  const navigate = useNavigate();
 
   const getTasks = async () => {
     const response = await api.get("/tasks");
@@ -19,11 +18,6 @@ const TodoPage = () => {
   };
 
   useEffect(() => {
-    if(sessionToken === null) {
-      alert("You can use it after Sing-in");
-      navigate("/login");
-    }
-
     getTasks();
   }, []);
   const addTodo = async () => {
@@ -67,8 +61,18 @@ const TodoPage = () => {
       console.log("error", error);
     }
   };
+
+  const logout = () => {
+    sessionStorage.removeItem("token");
+    navigate("/login");
+    window.location.reload();
+  };
+  
   return (
     <Container>
+      <div className="logout-button-box">
+        <button className="logout-button" onClick={logout}>로그아웃</button>
+      </div>
       <Row className="add-item-row">
         <Col xs={12} sm={10}>
           <input

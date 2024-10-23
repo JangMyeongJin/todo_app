@@ -16,7 +16,7 @@ body{
   padding:1em
 }
 .add-item-row{
-  margin-top:50px !important;
+  margin-top:30px !important;
   margin-bottom: 30px;
 }
 .input-box{
@@ -94,4 +94,22 @@ button{
 
 .error {
   color: red;
+}
+
+.todo-by{
+  font-size: 14px;
+  color: #8d8d8d;
+  margin-left: 20px;
+}
+
+.logout-button-box{
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 20px;
+}
+
+.logout-button{
+  border:none;
+  background-color: lightblue;
+  color: #ffffff;
 }

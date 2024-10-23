@@ -2,14 +2,12 @@ import React, { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import api from "../utils/api";
+import { Link, useNavigate, Navigate } from "react-router-dom";
 
-import { Link, useNavigate } from "react-router-dom";
-
-const LoginPage = () => {
+const LoginPage = ({user, setUser}) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const [user, setUser] = useState(null);
 
   const navigate = useNavigate(); // 페이지 이동을 위한 navigate
 
@@ -38,11 +36,15 @@ const LoginPage = () => {
     }
   }
 
+  if(user) {
+    return <Navigate to="/" />;
+  }
+
   return (
     <div className="display-center">
       {error && <div className="error">{error}</div>}
       <Form className="login-box" onSubmit={handleLogin}>
-        <h1>로그인</h1>
+        <h1>Log-in</h1>
         <Form.Group className="mb-3" controlId="formBasicEmail">
           <Form.Label>Email address</Form.Label>
           <Form.Control type="email" placeholder="Enter email" onChange={(event) => setEmail(event.target.value)}/>
