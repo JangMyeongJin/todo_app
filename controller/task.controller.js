@@ -5,7 +5,8 @@ const taskController = {};
 taskController.createTask = async (req, res) => {
     try {
         const {task, status} = req.body;
-        const newTask = new Task( {task, status});
+        const {userId} = req;
+        const newTask = new Task( {task, status, author: userId});
 
         await newTask.save();
 
@@ -19,7 +20,8 @@ taskController.createTask = async (req, res) => {
 
 taskController.getTask = async (req, res) => {
     try{
-        const taskList = await Task.find({}).select("-__v");
+        // author 필드를 참조하는 모든 데이터를 가져옴 (Join처럼 사용)
+        const taskList = await Task.find({}).populate("author");
 
         res.status(200).json({status: "ok", data: taskList});
     }catch(err){
